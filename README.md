@@ -4,7 +4,7 @@ debug-console
 A simple togglable interactive mode for node.js.
 
 You can start and stop it from any place in your code.
-It allows you to interact with your global objects and evaluate new or existing functions.
+It allows you to interact with your global objects and evaluate new pieces.
 
 There are two functions available:
 
