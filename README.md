@@ -21,7 +21,11 @@ var interactive = require('debug-console');
 interactive.start('Point 1');
 
 //Interactive mode started at: Point 1
-//>
+//> console.log(5)
+//5
+//undefined
+//> :q
+//Interactive mode off
 ```
 
 Licensed under MIT license. Copyright (c) 2014 Adam Paszke
