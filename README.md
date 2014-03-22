@@ -18,7 +18,7 @@ There are two functions available:
 
 To quit type ```:q```
 
-Example usage:
+**Example usage:**
 
 ```javascript
 var interactive = require('debug-console');
