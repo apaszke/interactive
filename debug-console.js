@@ -95,7 +95,7 @@ var processKey = function( key ){
             if(indentation === 0) {
                 try {
                     stdout.write('\n');
-                    result = eval(saved);
+                    result = eval.apply(global, [saved]);
                     stdout.write('\u001b[37m' + util.inspect(result) + '\u001b[0m');
                 } catch (e) {
                     stdout.write(e.toString() + e.stack);
