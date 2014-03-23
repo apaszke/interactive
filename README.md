@@ -21,7 +21,7 @@ To quit type ```:q```
 **Example usage:**
 
 ```javascript
-var interactive = require('debug-console');
+var interactive = require('interactive');
 interactive.start('Point 1');
 
 //Interactive mode started at: Point 1
