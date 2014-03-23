@@ -4,7 +4,7 @@ interactive
 A simple togglable interactive mode for node.js.
 
 You can start and stop it from any place in your code.
-It allows you to interact with your global objects and evaluate new pieces. You can use arrow keys to navigate through commands you ran.
+It allows you to interact with your global objects and evaluate new pieces. You can use arrow keys to navigate through commands you ran, even in previous sessions!
 
 **Please note that it switches stdin to rawMode, so if you have any listeners on it, it's best to close them first.**
 

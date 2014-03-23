@@ -1,6 +1,6 @@
 {
   "name": "interactive",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Togglable interactive mode",
   "main": "interactive.js",
   "scripts": {

@@ -1,4 +1,5 @@
 var util = require('util');
+var fs = require('fs');
 var stdin = process.stdin;
 var stdout = process.stdout;
 
@@ -31,7 +32,7 @@ var refreshLine = function () {
     exit = false;
 };
 
-var countindentationation = function (line) {
+var countIndentation = function (line) {
     var len = line.length;
     for(var i = 0; i < len; i++) {
         if(line[i] == '{') {
@@ -53,7 +54,7 @@ var processKey = function( key ){
                 exit = true;
             } else {
                 stdout.write('\n');
-                process.exit();
+                module.exports.stop(true);
             }
             break;
         /*---------------------------------------------/
@@ -69,12 +70,11 @@ var processKey = function( key ){
         case '\u000d':
             var result;
             
-            countindentationation(display);
+            countIndentation(display);
             
             if(display == ':q') {
-                stdout.write('\n\u001b[37m' + 'Interactive mode off' + '\u001b[0m\n');
-                stdin.removeListener('data', processKey);
-                stdin.setRawMode(false);
+                stdout.write('\n');
+                module.exports.stop();
                 break;
             }
             
@@ -203,26 +203,43 @@ var processKey = function( key ){
 /--------------------START---------------------/
 /---------------------------------------------*/
 module.exports.start = function (name) {
-    if(name) {
-        stdout.write('Interactive mode started at: ' + name + '\n');
-    }
-    stdin.setRawMode(true);
-    stdin.setEncoding('utf8');
-    stdout.setEncoding('utf8');
-    stdin.resume();
-    stdin.on('data', processKey);
-    command_memory = [];
-    tmp = "";
-    index = 0;
-    pos = 0;
-    display = "";
-    exit = false;
-    indentation = 0;
-    saved = "";
-    refreshLine();
+    fs.readFile('history.json', { encoding:"utf8" }, function(err, data) {
+        if(err) {
+            stdout.write("Couldn't load command history!\n");
+            command_memory = [];
+            index = 0;
+        } else {
+            command_memory = JSON.parse(data);
+            index = command_memory.length;
+        }
+        if(name) {
+            stdout.write('Interactive mode started at: ' + name + '\n');
+        }
+        stdin.setRawMode(true);
+        stdin.setEncoding('utf8');
+        stdout.setEncoding('utf8');
+        stdin.resume();
+        stdin.on('data', processKey);
+        tmp = "";
+        pos = 0;
+        display = "";
+        exit = false;
+        indentation = 0;
+        saved = "";
+        refreshLine();
+    });
+    
 };
 
-module.exports.stop = function () {
+module.exports.stop = function (exit) {
+    fs.writeFile('history.json', JSON.stringify(command_memory), function(err) {
+        if(err) {
+            stdout.write("Couldn't save history!");
+        }
+        if(exit) {
+            process.exit();
+        }
+    });
     stdout.write('\u001b[37m' + 'Interactive mode off\n' + '\u001b[0m');
     stdin.removeListener('data', processKey);
     stdin.setRawMode(false);
