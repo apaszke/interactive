@@ -1,4 +1,4 @@
-debug-console
+interactive
 =============
 
 A simple togglable interactive mode for node.js.

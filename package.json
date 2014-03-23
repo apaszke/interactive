@@ -1,24 +1,24 @@
 {
-  "name": "debug-console",
+  "name": "interactive",
   "version": "0.1.0",
   "description": "Togglable interactive mode",
-  "main": "debug-console.js",
+  "main": "interactive.js",
   "scripts": {
     "test": "echo \"0\""
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wesolyromek/debug-console"
+    "url": "https://github.com/wesolyromek/interactive"
   },
   "keywords": [
+    "interactive",
     "debug",
-    "console",
-    "interactive"
+    "terminal"
   ],
   "author": "Adam Paszke",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wesolyromek/debug-console/issues"
+    "url": "https://github.com/wesolyromek/interactive/issues"
   },
-  "homepage": "https://github.com/wesolyromek/debug-console"
+  "homepage": "https://github.com/wesolyromek/interactive"
 }
