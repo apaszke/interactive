@@ -17,7 +17,9 @@ There are two functions available:
     * Stops interactive mode
 
 Have an complicated object you need to set up often? Bored of repeating code?
-Try ```:l <filename>``` to run a code snippet from a file! Filename can be either relative to your project root or absolute.
+
+Try ```:l <filename>``` to run a code snippet from a file!
+Filename can be either relative to your project root or absolute.
 
 To quit type ```:q```
 
