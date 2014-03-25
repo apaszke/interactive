@@ -36,11 +36,11 @@ var interactive = require('interactive');
 interactive.start('Point 1');
 
 //Interactive mode started at: Point 1
-//> console.log(5)
+//> a = 5
 //5
-//undefined
 //> :l test.js
 //this is output from test.js
+//undefined
 //> a
 //7
 //> :q

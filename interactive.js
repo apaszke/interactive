@@ -97,7 +97,7 @@ var processKey = function( key ){
                                 index = command_memory.length;
                                 stdout.write('\n');
                                 result = eval.apply(global, [data]);
-                                stdout.write('\u001b[37m' + util.inspect(result) + '\u001b[0m');
+                                stdout.write('\u001b[37m' + util.inspect(result) + '\u001b[0m\n');
                                 pos = 0;
                                 tmp = "";
                                 display = "";
