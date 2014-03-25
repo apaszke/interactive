@@ -30,7 +30,7 @@ test.js
 console.log('this is output from test.js');
 a = 7;
 ```
-
+yourscript.js
 ```javascript
 var interactive = require('interactive');
 interactive.start('Point 1');
