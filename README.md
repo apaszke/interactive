@@ -22,9 +22,9 @@ There are two functions available:
 * ```stop();```
     * Stops interactive mode
 
-Have an complicated object you need to set up often? Bored of repeating code?
-
 **Special options**
+
+Have an complicated object you need to set up often? Bored of repeating code?
 
 Try ```:l <filename>``` to run a code snippet from a file!
 Filename can be either relative to your project root or absolute.
