@@ -3,14 +3,14 @@ interactive
 
 A simple togglable interactive mode for node.js.
 
+Start interactive mode from anywhere in your code!
+Interact with your global objects and evaluate new pieces. Use arrow keys to navigate through commands you ran, even in previous sessions!
+
 **Install**
 
 ```
 npm install interactive
 ```
-
-Start interactive mode from anywhere in your code!
-Interact with your global objects and evaluate new pieces. Use arrow keys to navigate through commands you ran, even in previous sessions!
 
 **Please note that it switches stdin to rawMode, so if you have any listeners on it, it's best to close them first.**
 
