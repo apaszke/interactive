@@ -15,6 +15,10 @@ var exit = false;
 var indentation = 0;
 var saved = "";
 
+var isAbsolute = function (path) {
+    return path.substr(0,2) == '\\' || path.substr(1,2) == ':\\' || path.substr(0,1) == '/';
+};
+
 var refreshLine = function () {
     display = display.replace(/[\x00-\x1F\x7F-\x9F]/, "", "g");
     var offset = display.length-pos+1;
@@ -75,6 +79,39 @@ var processKey = function( key ){
             if(display == ':q') {
                 stdout.write('\n');
                 module.exports.stop();
+                break;
+            }
+            
+            if(display.substr(0,2) == ':l') {
+                var path = display.substr(3);
+                if(!isAbsolute(path)) {
+                    path = process.cwd() + '/' + display.substr(3);
+                }
+                fs.exists(path, function(exists) {
+                    if(exists) {
+                        fs.readFile(path, {encoding:'utf8'}, function(err, data) {
+                            if(err) {
+                                stdout.write("Couldn't load snippet");
+                            } else {
+                                command_memory.push(display);
+                                index = command_memory.length;
+                                stdout.write('\n');
+                                result = eval.apply(global, [data]);
+                                stdout.write('\u001b[37m' + util.inspect(result) + '\u001b[0m');
+                                pos = 0;
+                                tmp = "";
+                                display = "";
+                                refreshLine();
+                            }
+                        });
+                    } else {
+                        stdout.write("\nFile doesn't exist!\n");
+                        pos = 0;
+                        tmp = "";
+                        display = "";
+                        refreshLine();
+                    }
+                });
                 break;
             }
             
@@ -203,13 +240,17 @@ var processKey = function( key ){
 /--------------------START---------------------/
 /---------------------------------------------*/
 module.exports.start = function (name) {
-    fs.readFile('history.json', { encoding:"utf8" }, function(err, data) {
+    fs.readFile(__dirname + '/history.json', { encoding:"utf8" }, function(err, data) {
         if(err) {
             stdout.write("Couldn't load command history!\n");
             command_memory = [];
             index = 0;
         } else {
+            try {
             command_memory = JSON.parse(data);
+            } catch (e) {
+                stdout.write("Couldn't load command history!\n");
+            }
             index = command_memory.length;
         }
         if(name) {
@@ -231,12 +272,12 @@ module.exports.start = function (name) {
     
 };
 
-module.exports.stop = function (exit) {
-    fs.writeFile('history.json', JSON.stringify(command_memory), function(err) {
+module.exports.stop = function (quit) {
+    fs.writeFile(__dirname + '/history.json', JSON.stringify(command_memory), function(err) {
         if(err) {
             stdout.write("Couldn't save history!");
         }
-        if(exit) {
+        if(quit) {
             process.exit();
         }
     });

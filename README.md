@@ -3,8 +3,8 @@ interactive
 
 A simple togglable interactive mode for node.js.
 
-You can start and stop it from any place in your code.
-It allows you to interact with your global objects and evaluate new pieces. You can use arrow keys to navigate through commands you ran, even in previous sessions!
+Start interactive mode from anywhere in your code!
+Interact with your global objects and evaluate new pieces. Use arrow keys to navigate through commands you ran, even in previous sessions!
 
 **Please note that it switches stdin to rawMode, so if you have any listeners on it, it's best to close them first.**
 
@@ -16,9 +16,18 @@ There are two functions available:
 * ```stop();```
     * Stops interactive mode
 
+Have an complicated object you need to set up often? Bored of repeating code?
+Try ```:l <filename>``` to run a code snippet from a file! Filename can be either relative to your project root or absolute.
+
 To quit type ```:q```
 
 **Example usage:**
+
+test.js
+```javascript
+console.log('this is output from test.js');
+a = 7;
+```
 
 ```javascript
 var interactive = require('interactive');
@@ -28,8 +37,13 @@ interactive.start('Point 1');
 //> console.log(5)
 //5
 //undefined
+//> :l test.js
+//this is output from test.js
+//> a
+//5
 //> :q
 //Interactive mode off
 ```
+
 
 Licensed under MIT license. Copyright (c) 2014 Adam Paszke
