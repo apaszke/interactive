@@ -42,7 +42,7 @@ interactive.start('Point 1');
 //> :l test.js
 //this is output from test.js
 //> a
-//5
+//7
 //> :q
 //Interactive mode off
 ```
