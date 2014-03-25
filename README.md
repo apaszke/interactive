@@ -4,7 +4,10 @@ interactive
 A simple togglable interactive mode for node.js.
 
 **Install**
-```npm install interactive```
+
+```
+npm install interactive
+```
 
 Start interactive mode from anywhere in your code!
 Interact with your global objects and evaluate new pieces. Use arrow keys to navigate through commands you ran, even in previous sessions!
