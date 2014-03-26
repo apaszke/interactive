@@ -47,6 +47,24 @@ var countIndentation = function (line) {
     }
 };
 
+var clearLine = function () {
+    pos = 0;
+    tmp = "";
+    display = "";
+    refreshLine();
+};
+
+var execute = function (code) {
+    try {
+        stdout.write('\n');
+        result = eval.apply(global, [code]);
+        stdout.write('\u001b[37m' + util.inspect(result) + '\u001b[0m');
+    } catch (e) {
+        stdout.write(e.toString() + e.stack);
+    }
+    stdout.write('\n');
+};
+
 var processKey = function( key ){
     switch (key) {
         /*---------------------------------------------/
@@ -89,27 +107,20 @@ var processKey = function( key ){
                 }
                 fs.exists(path, function(exists) {
                     if(exists) {
-                        fs.readFile(path, {encoding:'utf8'}, function(err, data) {
+                        fs.readFile(path, { encoding: 'utf8' }, function(err, data) {
                             if(err) {
-                                stdout.write("Couldn't load snippet");
+                                stdout.write("\nCouldn't load snippet\n");
+                                clearLine();
                             } else {
                                 command_memory.push(display);
                                 index = command_memory.length;
-                                stdout.write('\n');
-                                result = eval.apply(global, [data]);
-                                stdout.write('\u001b[37m' + util.inspect(result) + '\u001b[0m\n');
-                                pos = 0;
-                                tmp = "";
-                                display = "";
-                                refreshLine();
+                                execute(data);
+                                clearLine();
                             }
                         });
                     } else {
                         stdout.write("\nFile doesn't exist!\n");
-                        pos = 0;
-                        tmp = "";
-                        display = "";
-                        refreshLine();
+                        clearLine();
                     }
                 });
                 break;
@@ -117,12 +128,9 @@ var processKey = function( key ){
             
             if(display.length === 0) {
                 if(saved.length === 0) {
-                    stdout.write('\n\u001b[37mundefined\u001b[0m');
+                    stdout.write('\n\u001b[37mundefined\u001b[0m\n');
                 }
-                pos = 0;
-                tmp = "";
-                display = "";
-                refreshLine();
+                clearLine();
                 break;
             }
             
@@ -130,27 +138,16 @@ var processKey = function( key ){
             command_memory.push(display);
             
             if(indentation === 0) {
-                try {
-                    stdout.write('\n');
-                    result = eval.apply(global, [saved]);
-                    stdout.write('\u001b[37m' + util.inspect(result) + '\u001b[0m');
-                } catch (e) {
-                    stdout.write(e.toString() + e.stack);
-                } finally {
-                    saved = "";
-                }
-
-                index = command_memory.length;
-                if(command_memory.length > 100) {
-                    command_memory.shift();
-                }
+                execute(saved);
+                saved = "";
             }
             
-            tmp = "";
-            display = "";
-            pos = 0;
-            stdout.write('\n');
-            refreshLine();
+            
+            while(command_memory.length > 100) {
+                command_memory.shift();
+            }
+            index = command_memory.length;
+            clearLine();
             break;
         /*---------------------------------------------/
         /-------------------BACKSPACE------------------/
